@@ -13,6 +13,29 @@ public class Contact {
     private Email email;
     private Birth birth;
 
+    public Contact() {
+
+    }
+
+    public Contact(Name name, Phone phone, Email email, Birth birth) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.birth = birth;
+    }
+
+    public Contact(Name name, Phone phone, Email email) {
+        this(name, phone, email, new Birth());
+    }
+
+    public Contact(Name name, Phone phone) {
+        this(name, phone, new Email(), new Birth());
+    }
+
+    public Contact(Name name) {
+        this(name, new Phone(), new Email(), new Birth());
+    }
+
     public Name getName() {
         return name;
     }
@@ -49,10 +72,10 @@ public class Contact {
         var sb = new StringJoiner("\n");
         sb.add("BEGIN:VCARD");
         sb.add("VERSION:2.1");
-        if (!name.isEmpty()) sb.add(name.toVCF());
-        if (!phone.isEmpty()) sb.add(phone.toVCF());
-        if (!email.isEmpty()) sb.add(email.toVCF());
-        if (!birth.isEmpty()) sb.add(birth.toVCF());
+        if (name != null && !name.isEmpty()) sb.add(name.toVCF());
+        if (phone != null && !phone.isEmpty()) sb.add(phone.toVCF());
+        if (email != null && !email.isEmpty()) sb.add(email.toVCF());
+        if (birth != null && !birth.isEmpty()) sb.add(birth.toVCF());
         sb.add("END:VCARD");
         return sb.toString();
     }
