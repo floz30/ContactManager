@@ -1,10 +1,14 @@
 package fr.floz.contact;
 
+import fr.floz.contact.properties.Email;
+import fr.floz.contact.properties.Phone;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static fr.floz.contact.properties.Birth.BirthBuilder;
 import static fr.floz.contact.properties.Name.NameBuilder;
+import static fr.floz.contact.properties.Phone.PhoneBuilder;
+import static fr.floz.contact.properties.Email.EmailBuilder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -136,4 +140,113 @@ class ContactsApplicationTests {
     public void birth2VCF_7() {
         assertThrows(IllegalArgumentException.class, () -> new BirthBuilder().setMonth(13).setDay(22).build());
     }
+
+    @Test
+    @Tag("email")
+    public void email2VCF_1() {
+        var email = new EmailBuilder()
+                .setEmail("allo123@gmail.com")
+                .setPref()
+                .setType(Email.Type.WORK)
+                .build();
+        var expected = "EMAIL;PREF=1;TYPE=WORK:allo123@gmail.com";
+
+        assertEquals(expected, email.toVCF());
+    }
+
+    @Test
+    @Tag("email")
+    public void email2VCF_2() {
+        var email = new EmailBuilder()
+                .setEmail("allo123@gmail.com")
+                .setPref()
+                .build();
+        var expected = "EMAIL;PREF=1:allo123@gmail.com";
+
+        assertEquals(expected, email.toVCF());
+    }
+
+    @Test
+    @Tag("email")
+    public void email2VCF_3() {
+        var email = new EmailBuilder()
+                .setEmail("allo123@gmail.com")
+                .setType(Email.Type.HOME)
+                .build();
+        var expected = "EMAIL;TYPE=HOME:allo123@gmail.com";
+
+        assertEquals(expected, email.toVCF());
+    }
+
+    @Test
+    @Tag("email")
+    public void email2VCF_4() {
+        var email = new EmailBuilder()
+                .setEmail("allo123@gmail.com")
+                .build();
+        var expected = "EMAIL:allo123@gmail.com";
+
+        assertEquals(expected, email.toVCF());
+    }
+
+    @Test
+    @Tag("email")
+    public void email2VCF_5() {
+        assertThrows(IllegalStateException.class, () -> new EmailBuilder().build());
+    }
+
+    @Test
+    @Tag("phone")
+    public void phone2VCF_1() {
+        var email = new PhoneBuilder()
+                .setNumber("0123456789")
+                .setPref()
+                .setType(Phone.Type.CELL)
+                .build();
+        var expected = "TEL;VALUE=TEXT;PREF=1;TYPE=CELL:0123456789";
+
+        assertEquals(expected, email.toVCF());
+    }
+
+    @Test
+    @Tag("phone")
+    public void phone2VCF_2() {
+        var email = new PhoneBuilder()
+                .setNumber("0123456789")
+                .setPref()
+                .build();
+        var expected = "TEL;VALUE=TEXT;PREF=1:0123456789";
+
+        assertEquals(expected, email.toVCF());
+    }
+
+    @Test
+    @Tag("phone")
+    public void phone2VCF_3() {
+        var email = new PhoneBuilder()
+                .setNumber("0123456789")
+                .setType(Phone.Type.HOME)
+                .build();
+        var expected = "TEL;VALUE=TEXT;TYPE=HOME:0123456789";
+
+        assertEquals(expected, email.toVCF());
+    }
+
+    @Test
+    @Tag("phone")
+    public void phone2VCF_4() {
+        var email = new PhoneBuilder()
+                .setNumber("0123456789")
+                .build();
+        var expected = "TEL;VALUE=TEXT:0123456789";
+
+        assertEquals(expected, email.toVCF());
+    }
+
+    @Test
+    @Tag("phone")
+    public void phone2VCF_5() {
+        assertThrows(IllegalStateException.class, () -> new PhoneBuilder().build());
+    }
+
 }
