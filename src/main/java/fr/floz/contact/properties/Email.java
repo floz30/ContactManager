@@ -1,34 +1,69 @@
 package fr.floz.contact.properties;
 
-import fr.floz.contact.Utils;
-
-import java.util.StringJoiner;
-
+/**
+ * Représente une adresse mail électronique.
+ */
 public class Email implements Properties {
-    private String emails = "";
-
-    public String getEmails() {
-        return emails;
+    public enum Type {
+        HOME,
+        WORK
     }
 
-    public void setEmails(String emails) {
-        this.emails = emails;
+    private final String email;
+    private final boolean isPref;
+    private final Type type;
+
+    private Email(EmailBuilder builder) {
+        this.email = builder.email;
+        this.isPref = builder.isPref;
+        this.type = builder.type;
+    }
+
+    @Override
+    public String toString() {
+        return email+ "(pref=" +isPref+ "; type=" +type+ ")";
     }
 
     @Override
     public String toVCF() {
-        var sj = new StringJoiner("\n");
-        var tokensMail = emails.split(";");
-        for (var value : tokensMail) {
-            var tokensData = value.split(":");
-            var line = "EMAIL;" + Utils.getType(tokensData[0])+ ":" +tokensData[1];
-            sj.add(line);
-        }
-        return sj.toString();
+        var sb = new StringBuilder("EMAIL");
+        if (isPref) sb.append(";PREF=1");
+        if (type != null) sb.append(";TYPE=").append(type);
+        sb.append(":").append(email);
+        return sb.toString();
     }
 
     @Override
     public boolean isEmpty() {
-        return emails.isEmpty();
+        return email.isEmpty();
+    }
+
+    public static class EmailBuilder {
+        private String email;
+        private boolean isPref;
+        private Type type;
+
+
+        public Email build() {
+            if (email == null || email.isEmpty()) {
+                throw new IllegalStateException("email can't be empty");
+            }
+            return new Email(this);
+        }
+
+        public EmailBuilder setEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public EmailBuilder setPref() {
+            this.isPref = true;
+            return this;
+        }
+
+        public EmailBuilder setType(Type type) {
+            this.type = type;
+            return this;
+        }
     }
 }

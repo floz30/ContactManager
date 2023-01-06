@@ -5,43 +5,18 @@ import fr.floz.contact.properties.Email;
 import fr.floz.contact.properties.Name;
 import fr.floz.contact.properties.Phone;
 
+import java.util.List;
 import java.util.StringJoiner;
 
 public class Contact {
     private Name name;
-    private Phone phone;
-    private Email email;
     private Birth birth;
+    private Phone phone;
+    private List<Email> emails;
+
 
     public Contact() {
 
-    }
-
-    public Contact(Name name, Phone phone, Email email, Birth birth) {
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.birth = birth;
-    }
-
-    public Contact(Name name, Birth birth) {
-        this(name, new Phone(), new Email(), birth);
-    }
-
-    public Name getName() {
-        return name;
-    }
-
-    public Phone getPhone() {
-        return phone;
-    }
-
-    public Email getEmail() {
-        return email;
-    }
-
-    public Birth getBirth() {
-        return birth;
     }
 
     public void setName(Name name) {
@@ -52,8 +27,8 @@ public class Contact {
         this.phone = phone;
     }
 
-    public void setEmail(Email email) {
-        this.email = email;
+    public void addEmail(Email email) {
+        this.emails.add(email);
     }
 
     public void setBirth(Birth birth) {
@@ -66,7 +41,7 @@ public class Contact {
         sb.add("VERSION:2.1");
         if (name != null && !name.isEmpty()) sb.add(name.toVCF());
         if (phone != null && !phone.isEmpty()) sb.add(phone.toVCF());
-        if (email != null && !email.isEmpty()) sb.add(email.toVCF());
+        if (emails != null && !emails.isEmpty()) emails.forEach(e -> sb.add(e.toVCF()));
         if (birth != null && !birth.isEmpty()) sb.add(birth.toVCF());
         sb.add("END:VCARD");
         return sb.toString();
