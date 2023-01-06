@@ -1,15 +1,12 @@
 package fr.floz.contact;
 
-import fr.floz.contact.properties.Birth;
-import fr.floz.contact.properties.Email;
-import fr.floz.contact.properties.Name;
-import fr.floz.contact.properties.Phone;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static fr.floz.contact.properties.Birth.BirthBuilder;
 import static fr.floz.contact.properties.Name.NameBuilder;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ContactsApplicationTests {
 
@@ -17,7 +14,7 @@ class ContactsApplicationTests {
     public void contact2VCF() {
         var contact = new Contact();
         contact.setName(new NameBuilder().setFirstNames("Chuck").setLastNames("Norris").build());
-        contact.setBirth(new Birth(15, 9));
+        contact.setBirth(new BirthBuilder().setDay(15).setMonth(9).build());
         //contact.setPhone(new Phone("0123456789"));
         //contact.setEmail(new Email("norris@texas.com"));
 
@@ -86,4 +83,57 @@ class ContactsApplicationTests {
         assertEquals(expected, name.toVCF());
     }
 
+    @Test
+    @Tag("birth")
+    public void birth2VCF_1() {
+        var birth = new BirthBuilder()
+                .setDay(1)
+                .setMonth(1)
+                .build();
+        var expected = "BDAY:--0101";
+
+        assertEquals(expected, birth.toVCF());
+    }
+
+    @Test
+    @Tag("birth")
+    public void birth2VCF_2() {
+        var birth = new BirthBuilder()
+                .setDay(24)
+                .setMonth(12)
+                .build();
+        var expected = "BDAY:--1224";
+
+        assertEquals(expected, birth.toVCF());
+    }
+
+    @Test
+    @Tag("birth")
+    public void birth2VCF_3() {
+        assertThrows(IllegalArgumentException.class, () -> new BirthBuilder().setDay(24).build());
+    }
+
+    @Test
+    @Tag("birth")
+    public void birth2VCF_4() {
+        assertThrows(IllegalArgumentException.class, () -> new BirthBuilder().setMonth(10).build());
+    }
+
+    @Test
+    @Tag("birth")
+    public void birth2VCF_5() {
+        assertThrows(IllegalArgumentException.class, () -> new BirthBuilder().setMonth(10).setDay(56).build());
+    }
+
+    @Test
+    @Tag("birth")
+    public void birth2VCF_6() {
+        assertThrows(IllegalArgumentException.class, () -> new BirthBuilder().setMonth(13).setDay(56).build());
+    }
+
+    @Test
+    @Tag("birth")
+    public void birth2VCF_7() {
+        assertThrows(IllegalArgumentException.class, () -> new BirthBuilder().setMonth(13).setDay(22).build());
+    }
 }

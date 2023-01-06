@@ -24,16 +24,8 @@ public class Contact {
         this.birth = birth;
     }
 
-    public Contact(Name name, Phone phone, Email email) {
-        this(name, phone, email, new Birth());
-    }
-
-    public Contact(Name name, Phone phone) {
-        this(name, phone, new Email(), new Birth());
-    }
-
-    public Contact(Name name) {
-        this(name, new Phone(), new Email(), new Birth());
+    public Contact(Name name, Birth birth) {
+        this(name, new Phone(), new Email(), birth);
     }
 
     public Name getName() {
