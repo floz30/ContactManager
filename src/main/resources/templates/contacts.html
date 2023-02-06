@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head data-th-replace="~{fragments :: metadata ('Contact')}"></head>
+<body>
+    <nav data-th-replace="~{fragments :: nav}"></nav>
+
+    <div class="add-contact">
+        <a href="/contact">+</a>
+    </div>
+
+
+    <table class="ui striped aligned table">
+        <thead>
+            <tr>
+                <th data-th-text="#{list.column.name}">Name</th>
+                <!--<th data-th-text="#{list.column.email}">Email</th>
+                <th data-th-text="#{list.column.phone}">Phone</th>
+                <th data-th-text="#{list.column.birth}">Birth</th>-->
+                <th data-th-text="#{list.column.action}">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-th-each="value: ${contacts}">
+                <td data-th-text="${value.name.formattedName}"></td>
+                <!--<td data-th-text="${value.email}"></td>
+                <td data-th-text="${value.phone}"></td>
+                <td data-th-text="${value.birth}"></td>-->
+                <td><a class="edit popup icon" data-content="#{list.column.action.read}" data-th-href="@{/contact/{id}(id = ${value.getId()})}"></a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script data-th-replace="~{fragments :: script}"></script>
+</body>
+</html>

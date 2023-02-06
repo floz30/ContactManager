@@ -1,31 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html lang="fr">
+<head data-th-replace="~{fragments :: metadata ('Consultation d\'un contact')}"></head>
 <body>
-    <form action="#" th:action="@{/contact}" th:object="${contact}" method="post">
-        <h2>Nom</h2>
-        <p>Nom de famille : <input type="text" th:field="*{name.lastName}"></p>
-        <p>Prénom : <input type="text" th:field="*{name.firstName}"></p>
-        <p>Deuxième prénom : <input type="text" th:field="*{name.middleName}"></p>
-        <p>Titre : <input type="text" th:field="*{name.title}"></p>
+    <nav data-th-replace="~{fragments :: nav}"></nav>
 
-        <h2>Numéros</h2>
-        <p>Numéros : <input type="text" th:field="*{phone.numbers}"></p>
 
-        <h2>Adresses mail</h2>
-        <p>E-mail : <input type="text" th:field="*{email.emails}"></p>
-
-        <h2>Date de naissance</h2>
-        <p>Jour : <input type="number" th:field="*{birth.day}"></p>
-        <p>Mois : <input type="number" th:field="*{birth.month}"></p>
-
-        <p>
-            <input type="submit" value="submit" />
-            <input type="reset" value="reset" />
-        </p>
-    </form>
+    <script data-th-replace="~{fragments :: script}"></script>
 </body>
 </html>

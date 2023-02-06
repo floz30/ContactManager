@@ -1,0 +1,36 @@
+<label data-th-fragment="form_label (field, content, helper)" data-th-for="${field}" data-th-inline="text">
+  [[${content}]]
+  <span class="ui icon" data-th-id="'helper_'+${field}" data-th-attrappend="data-tooltip=${helper}">
+    <i class="info circle icon"></i>
+  </span>
+</label>
+
+
+
+<div data-th-fragment="form_input (label, field, helper)" class="field">
+  <!--/*/ <th:block data-th-replace="${#strings.isEmpty(label)} ? _ : ~{:: form_label(${field}, ${label}, ${helper})}" /> /*/-->
+  <input type="text"
+         data-th-id="${field}"
+         data-th-field="*{__${field}__}"
+         data-th-attrappend="aria-describedby=${#strings.isEmpty(helper)} ? _ : 'helper_'+${field}" />
+</div>
+
+<head data-th-fragment="metadata (title)">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title data-th-text="${title}"></title>
+  <link data-th-href="@{/css/semantic.min.css}" href="../static/css/semantic.min.css" rel="stylesheet" type="text/css">
+  <link data-th-href="@{/css/style.css}" href="../static/css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<!--/*/ <th:block data-th-fragment="script">
+  <script data-th-src="@{/js/jquery-3.6.3.min.js}" src="../static/js/jquery-3.6.3.min.js"></script>
+  <script data-th-src="@{/js/semantic.min.js}" src="../static/js/semantic.min.js"></script>
+</th:block> /*/-->
+
+<nav data-th-fragment="nav">
+  <a href="#" data-th-text="#{navbar.previous}">Précédent</a>
+  <a data-th-href="@{/}" data-th-text="#{navbar.list}"></a>
+  <a href="#" data-th-text="#{navbar.next}">Suivant</a>
+</nav>

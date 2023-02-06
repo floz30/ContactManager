@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head data-th-replace="~{fragments :: metadata ('Edition d\'un contact')}"></head>
+<body>
+    <nav data-th-replace="~{fragments :: nav}"></nav>
+
+    <form action="#" data-th-action="@{/contact}" data-th-object="${contact}" method="post">
+        <div class="ui form">
+            <div class="fields">
+                <div data-th-replace="~{fragments :: form_input(#{contact.name.formatted}, 'name.formattedName', #{contact.name.formatted.helper})}"></div>
+                <div data-th-replace="~{fragments :: form_input(#{contact.name.nicknames}, 'name.nicknames', #{contact.name.nicknames.helper})}"></div>
+            </div>
+            <div class="fields">
+                <div data-th-replace="~{fragments :: form_input(#{contact.name.prefixes}, 'name.prefixes', #{contact.name.prefixes.helper})}"></div>
+                <div data-th-replace="~{fragments :: form_input(#{contact.name.firstname}, 'name.firstNames', #{contact.name.firstname.helper})}"></div>
+                <div data-th-replace="~{fragments :: form_input(#{contact.name.additionalNames}, 'name.additionalNames', #{contact.name.additionalNames.helper})}"></div>
+                <div data-th-replace="~{fragments :: form_input(#{contact.name.lastname}, 'name.lastNames', #{contact.name.lastname.helper})}"></div>
+                <div data-th-replace="~{fragments :: form_input(#{contact.name.suffixes}, 'name.suffixes', #{contact.name.suffixes.helper})}"></div>
+            </div>
+
+        </div>
+
+        <!--<p>Prénom : <input type="text" th:field="*{name.firstName}"></p>
+        <p>Deuxième prénom : <input type="text" th:field="*{name.middleName}"></p>
+        <p>Titre : <input type="text" th:field="*{name.title}"></p>
+
+        <h2>Numéros</h2>
+        <p>Numéros : <input type="text" th:field="*{phone.numbers}"></p>
+
+        <h2>Adresses mail</h2>
+        <p>E-mail : <input type="text" th:field="*{email.emails}"></p>
+
+        <h2>Date de naissance</h2>
+        <p>Jour : <input type="number" th:field="*{birth.day}"></p>
+        <p>Mois : <input type="number" th:field="*{birth.month}"></p>-->
+
+        <button class="ui green button" type="submit">Valider</button>
+        <button class="ui orange button" type="reset">Vider</button>
+        <button class="ui red button" type="button">Annuler</button>
+    </form>
+
+    <script data-th-replace="~{fragments :: script}"></script>
+</body>
+</html>
